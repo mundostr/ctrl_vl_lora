@@ -18,11 +18,21 @@ void setup() {
 
 	tasks_helpers::init_blink();
 	
-	if (!digitalRead(PIN_START_BTN)) {
+	// if (!digitalRead(PIN_START_BTN)) {
+	// 	config::init_bluetooth(BT_NAME);
+	// 	config::blink_rate = BLINK_RATE_CONFIG;
+	// } else {
+	// 	config::mode = config::LISTO;
+	// }
+	
+	if (!digitalRead(PIN_HOOK_TOP)) { // Modo config
 		config::init_bluetooth(BT_NAME);
 		config::blink_rate = BLINK_RATE_CONFIG;
-	} else {
-		config::mode = config::LISTO;
+	} else { // Modo vuelo
+		config::blink_rate = BLINK_RATE_ARMED;
+		config::mode = config::CIRCULANDO;
+		config::command_processed = false;
+		config::flight_started = true;
 	}
 	
 	// config::show_oled(0, 0, "OK", false);
@@ -42,17 +52,17 @@ void loop() {
 			config::reset_blink = false;
 		}
 	} else {
-		if (config::mode == config::LISTO) {
-			main::startbtn_control();
-		} else {
+		// if (config::mode == config::LISTO) {
+		// 	main::startbtn_control();
+		// } else {
 			if (config::mode != config::VUELO && config::mode != config::DESTERMALIZADO) main::endstops_control();
 			if (lora_ctrl.activate()) {
-				ESP_LOGI(TAG, "RDT activado (%i)", LoRa.packetRssi());
-
 				config::mode = config::DESTERMALIZADO;
 				config::command_processed = false;
+				
+				ESP_LOGI(TAG, "RDT activado (%i)", LoRa.packetRssi());
 			}
-		}
+		// }
 
 		main::modes_control();
 	}
