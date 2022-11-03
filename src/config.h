@@ -1,17 +1,8 @@
-/*
-https://randomnerdtutorials.com/esp32-lora-sensor-web-server/
-https://randomnerdtutorials.com/esp32-save-data-permanently-preferences/
-*/
-
 #pragma once
 
 #include <Arduino.h>
 #include <esp_log.h>
-// #include <SPI.h>
 #include <LoRa.h>
-// #include <Wire.h>
-// #include <Adafruit_GFX.h>
-// #include <Adafruit_SSD1306.h>
 #include <BluetoothSerial.h>
 #include <nvs_flash.h>
 #include <nvs.h>
@@ -38,12 +29,6 @@ https://randomnerdtutorials.com/esp32-save-data-permanently-preferences/
 #define DIO0 26
 #define LORA_BAND 915E6
 
-// #define OLED_SDA 4
-// #define OLED_SCL 15
-// #define OLED_RST 16
-// #define SCREEN_WIDTH 128
-// #define SCREEN_HEIGHT 64
-
 #define BT_NAME "CTRL_VL_LORA"
 #define QT_PARAMS 12
 #define BLINK_RATE_READY 1000
@@ -53,15 +38,14 @@ https://randomnerdtutorials.com/esp32-save-data-permanently-preferences/
 #define RESET_DELAY 3000
 #define WAIT_BEFORE_SUSPEND_PERIOD 3000
 #define START_LONGPRESS_PERIOD 3000
-#define PWM_MIN 500 // Pulso mínimo servos (ms)
-#define PWM_MED 1500 // Pulso medio servos (ms)
-#define PWM_MAX 2500 // Pulso máximo servos (ms)
+#define PWM_MIN 500
+#define PWM_MED 1500
+#define PWM_MAX 2500
 #define SERVO_STAB_ID 1
 #define RDT_COMMAND "dt"
 
 static const char *TAG = "TIMER";
 
-// Adafruit_SSD1306 oled(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RST);
 Servo servo_stab;
 BluetoothSerial bt;
 Bounce2::Button start_btn = Bounce2::Button();
@@ -138,31 +122,6 @@ namespace config {
 		
 		// esp_sleep_enable_ext0_wakeup((gpio_num_t)PIN_BTN, HIGH);
 	}
-
-	// void init_oled(int textSize, bool invert = false) {
-	// 	pinMode(OLED_RST, OUTPUT);
-	// 	digitalWrite(OLED_RST, LOW);
-	// 	delay(20);
-	// 	digitalWrite(OLED_RST, HIGH);
-		
-	// 	Wire.begin(OLED_SDA, OLED_SCL);
-	// 	if (!oled.begin(SSD1306_SWITCHCAPVCC, 0x3c, true, true)) {
-	// 		if (DEBUG) Serial.println(F("Error Oled"));
-	// 		for(;;);
-	// 	}
-		
-	// 	oled.clearDisplay();
-	// 	oled.setTextColor(WHITE);
-	// 	oled.setTextSize(textSize);
-	// 	oled.invertDisplay(invert);
-	// }
-
-	// void show_oled(int x, int y, const char *msg, bool clear) {
-	// 	if (clear) oled.clearDisplay();
-	// 	oled.setCursor(x, y);
-	// 	oled.print(msg);
-	// 	oled.display();
-	// }
 
 	void bt_callback(esp_spp_cb_event_t event, esp_spp_cb_param_t *param) {
 		if (event == ESP_SPP_SRV_OPEN_EVT) {

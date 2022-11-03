@@ -1,7 +1,5 @@
 /*
-https://randomnerdtutorials.com/ttgo-lora32-sx1276-arduino-ide/
-https://github.com/sandeepmistry/arduino-LoRa/issues/90
-https://randomnerdtutorials.com/esp32-save-data-permanently-preferences/
+Controlador Vuelo Libre con RDT LoRa y módulo GPS opcional, basado en módulo TTGO LoRa v1.
 */
 
 #include "config.h"
